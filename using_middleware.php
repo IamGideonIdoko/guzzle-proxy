@@ -10,35 +10,35 @@ use GuzzleHttp\HandlerStack;
 # where to make request to
 $targetUrl = 'https://httpbin.org/ip';
 
-# proxies
+# proxies (Get free proxies here: https://geonode.com/free-proxy-list)
 $proxies = [
-  'http'  => 'http://username:password@190.43.92.130:999',
-  'https' => 'http://username:password@5.78.76.237:8080',
+    'http'  => 'http://username:password@190.43.92.130:999',
+    'https' => 'http://username:password@5.78.76.237:8080',
 ];
 
 function proxy_middleware(array $proxies) 
 {
-  return function (callable $handler) use ($proxies) {
-    return function (RequestInterface $request, array $options) use ($handler, $proxies) {
-      # add proxy to request option
-      $options[RequestOptions::PROXY] = $proxies; 
-      return $handler($request, $options);
-      };
-  };
+    return function (callable $handler) use ($proxies) {
+        return function (RequestInterface $request, array $options) use ($handler, $proxies) {
+            # add proxy to request option
+            $options[RequestOptions::PROXY] = $proxies; 
+            return $handler($request, $options);
+        };
+    };
 }
 
 $stack = HandlerStack::create();
 $stack->push(proxy_middleware($proxies));
 
 $client = new Client([
-  'handler' => $stack,
-  RequestOptions::VERIFY => false, # disable SSL certificate validation
-  RequestOptions::TIMEOUT => 5, # timeout of 5 seconds
+    'handler' => $stack,
+    RequestOptions::VERIFY => false, # disable SSL certificate validation
+    RequestOptions::TIMEOUT => 30, # timeout of 30 seconds
 ]);
 
 try {
-  $body = $client->get($targetUrl)->getBody();
-  echo $body->getContents();
+    $body = $client->get($targetUrl)->getBody();
+    echo $body->getContents();
 } catch (\Exception $e) {
-  echo $e->getMessage();
+    echo $e->getMessage();
 }

@@ -8,10 +8,13 @@ use GuzzleHttp\RequestOptions;
 # where to make request to
 $targetUrl = 'https://httpbin.org/ip';
 
-# proxies (Get free proxies here: https://geonode.com/free-proxy-list)
+# update <YOUR_ZENROWS_API_KEY> with a valid API key
+$proxy = 'http://<YOUR_ZENROWS_API_KEY>:premium_proxy=true@proxy.zenrows.com:8001';
+
+# proxies
 $proxies = [
-    'http'  => 'http://190.43.92.130:999',
-    'https' => 'http://5.78.76.237:8080',
+    'http'  => $proxy,
+    'https' => $proxy,
 ];
 
 $client = new Client([
