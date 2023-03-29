@@ -12,8 +12,8 @@ $targetUrl = 'https://httpbin.org/ip';
 
 # proxies
 $proxies = [
-  'http'  => 'http://190.43.92.130:999',
-  'https' => 'http://5.78.76.237:8080',
+  'http'  => 'http://username:password@190.43.92.130:999',
+  'https' => 'http://username:password@5.78.76.237:8080',
 ];
 
 function proxy_middleware(array $proxies) 
@@ -32,6 +32,8 @@ $stack->push(proxy_middleware($proxies));
 
 $client = new Client([
   'handler' => $stack,
+  RequestOptions::VERIFY => false, # disable SSL certificate validation
+  RequestOptions::TIMEOUT => 5, # timeout of 5 seconds
 ]);
 
 try {

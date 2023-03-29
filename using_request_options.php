@@ -3,6 +3,7 @@
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 
 # where to make request to
@@ -16,6 +17,8 @@ $proxies = [
 
 $client = new Client([
   RequestOptions::PROXY => $proxies,
+  RequestOptions::VERIFY => false, # disable SSL certificate validation
+  RequestOptions::TIMEOUT => 5, # timeout of 5 seconds
 ]);
 
 try {
