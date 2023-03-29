@@ -3,7 +3,6 @@
 require 'vendor/autoload.php';
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 
 # where to make request to
